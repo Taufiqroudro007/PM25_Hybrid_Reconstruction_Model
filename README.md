@@ -18,7 +18,9 @@ The code:
 - compares persistence, an empirical temporal Ridge baseline, standalone ML
   models and baseline-plus-residual variants;
 - scores every model at a given horizon on identical target timestamps;
-- writes metrics, aligned predictions, and figures.
+- generates expanding-window out-of-fold residuals for hybrid models;
+- selects a residual correction multiplier using validation RMSE only;
+- writes metrics, aligned predictions, residual-fold audit files, and figures.
 
 ## 2. Environment
 
@@ -56,6 +58,8 @@ The script downloads the UCI dataset on first run and stores it under
 - `results/predictions_1h.csv` ... `predictions_24h.csv`: aligned predictions
   and target timestamps for every model.
 - `results/rmse_by_horizon.png`: multi-horizon RMSE plot.
+- `results/residual_oof_audit_*h.csv`: fold sizes used to construct training residuals.
+- `results/preliminary_in_sample/`: outputs from the earlier implementation; these are retained for traceability and must not be reported as results from the corrected pipeline.
 - `results/one_hour_model_comparison.png`: one-hour model comparison.
 
 ## 5. Important methodological notes
@@ -96,10 +100,17 @@ that discretization.
 
 ### Residual hybrid
 
-For each residual hybrid, the Ridge baseline is fitted on training data.
-A second model is fitted to the training residuals, and its forecast is added
-to the baseline forecast. The residual learner is trained only on training
-samples. The test labels are never used for fitting or model selection.
+For each horizon, Ridge residual targets are generated using expanding-window,
+time-ordered out-of-fold predictions. Each OOF block is predicted by a Ridge
+pipeline fitted only on earlier training observations; therefore, a training
+observation is not used to fit the baseline that predicts it. The residual
+learner is fitted to these OOF residuals. The final Ridge baseline is then
+refitted on the complete training period.
+
+A residual correction multiplier is selected from `{0, 0.25, 0.50, 0.75, 1.0}`
+by minimizing validation RMSE. The selected multiplier is applied unchanged
+to test predictions. Test labels are not used for fitting or model selection.
+The OOF fold sizes and positions are saved in a horizon-specific audit CSV.
 
 ### Metrics
 
@@ -108,13 +119,13 @@ is undefined at zero. The output includes the number of nonzero observations
 used for MAPE. MAE, RMSE and R² are calculated on the same target timestamps
 for every model at each horizon.
 
-### Limits of this first implementation
+### Limits of this implementation
 
-The first reconstruction stage uses fixed, transparent hyperparameters and
-does not yet implement an LSTM or rolling-origin evaluation. Those should be
-added only after this audit pipeline runs correctly and the exact sample
-alignment is confirmed. Do not retain the old LSTM metrics or claim that the
-new experiments reproduce them.
+The base estimators use fixed, transparent hyperparameters; the validation
+set selects only the residual correction multiplier, not the estimator
+hyperparameters. This implementation does not yet include XGBoost, LSTM, or
+rolling-origin evaluation. Do not retain the old LSTM metrics or claim that
+these experiments reproduce them.
 
 ## 6. Dataset citation
 

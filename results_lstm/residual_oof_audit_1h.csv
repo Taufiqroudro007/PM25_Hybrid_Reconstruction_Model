@@ -1,0 +1,7 @@
+horizon_hours,fold,baseline_train_start_position,baseline_train_end_position_exclusive,baseline_train_n,purged_start_position,purged_end_position_exclusive,purged_n,oof_block_start_position,oof_block_end_position_exclusive,oof_n,max_training_target_time,first_oof_origin_time,first_oof_target_time,causal_check
+1,1,0,14159,14159,14159,14160,1,14160,16992,2832,2011-12-14 01:00:00,2011-12-14 02:00:00,2011-12-14 03:00:00,True
+1,2,0,16991,16991,16991,16992,1,16992,19824,2832,2012-04-19 17:00:00,2012-04-19 18:00:00,2012-04-19 19:00:00,True
+1,3,0,19823,19823,19823,19824,1,19824,22656,2832,2012-09-24 01:00:00,2012-09-24 02:00:00,2012-09-24 03:00:00,True
+1,4,0,22655,22655,22655,22656,1,22656,25488,2832,2013-02-12 08:00:00,2013-02-12 09:00:00,2013-02-12 10:00:00,True
+1,5,0,25487,25487,25487,25488,1,25488,28321,2833,2013-06-24 12:00:00,2013-06-24 13:00:00,2013-06-24 14:00:00,True
+1,TOTAL,0,28321,28321,,,,,,14161,,,,True

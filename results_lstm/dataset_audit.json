@@ -1,0 +1,48 @@
+{
+  "n_rows": 43824,
+  "n_columns": 13,
+  "first_timestamp": "2010-01-01 00:00:00",
+  "last_timestamp": "2014-12-31 23:00:00",
+  "duplicate_timestamps": 0,
+  "missing_pm25": 2067,
+  "missing_pm25_percent": 4.716593647316539,
+  "missing_by_column": {
+    "year": 0,
+    "month": 0,
+    "day": 0,
+    "hour": 0,
+    "DEWP": 0,
+    "TEMP": 0,
+    "PRES": 0,
+    "cbwd": 0,
+    "Iws": 0,
+    "Is": 0,
+    "Ir": 0,
+    "pm2.5": 2067,
+    "datetime": 0
+  },
+  "non_hourly_gaps": 0,
+  "unique_wind_directions": [
+    "NE",
+    "NW",
+    "SE",
+    "cv"
+  ],
+  "chronological_split": {
+    "train": {
+      "rows": 33600,
+      "percentage_of_full_dataset": 76.67031763417306,
+      "valid_pm25_targets": 31654
+    },
+    "validation": {
+      "rows": 5088,
+      "percentage_of_full_dataset": 11.610076670317634,
+      "valid_pm25_targets": 5050
+    },
+    "test": {
+      "rows": 5136,
+      "percentage_of_full_dataset": 11.71960569550931,
+      "valid_pm25_targets": 5053
+    }
+  }
+}
