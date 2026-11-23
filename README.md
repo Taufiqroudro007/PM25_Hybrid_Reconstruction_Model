@@ -1,4 +1,3 @@
-```markdown
 # Residual Learning with a Meteorologically Informed Temporal Baseline for Short-Term PM2.5 Forecasting
 
 ## 1. Overview
